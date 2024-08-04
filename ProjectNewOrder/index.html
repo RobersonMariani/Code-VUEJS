@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montado o Lanche</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <!-- VUEJS -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body class="background">
+    <!-- As a heading -->
+    <nav class="navbar bg-body-tertiary">
+        <div class="container">
+            <span class="navbar-brand mb-0 h1">Monte o seu lanche</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="app">
+            <!-- Alerta do Bootstrap -->
+            <div v-show="showAlert" :class="typeAlert" class="alert alert-dismissible fade show" role="alert">
+                <strong>{{ alertMessage }}</strong>
+                <button type="button" class="btn-close" @click="showAlert = false" aria-label="Close"></button>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col">
+                            <img :src="bread[0]" alt="pão superior">
+                            <img :src="salad[0]" alt="salada">
+                            <img v-for="(img, index) in sauce" :key="index" :src="img" alt="molho">
+                            <img :src="hamburger[0]" alt="hambúrguer">
+                            <img :src="bread[1]" alt="pão inferior">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" v-if="stage == 1">
+                    <!-- TIPO DO PÃO -->
+                    <div class="row mt-2">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    TIPO DO PÃO
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" value="sesame" v-model="typeBread">
+                                        <label class="form-check-label">
+                                            Gergelim
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" value="Australian"
+                                            v-model="typeBread">
+                                        <label class="form-check-label">
+                                            Australiano
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- SALADAS -->
+                    <div class="row mt-2">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    SALADAS
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="lettuce"
+                                            v-model="typeSalad">
+                                        <label class="form-check-label">
+                                            Alface
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MOLHOS -->
+                    <div class="row mt-2">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    MOLHOS
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" value="ketchup"
+                                            v-model="typeSauce">
+                                        <label class="form-check-label">
+                                            Ketchup
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" value="mayonnaise"
+                                            v-model="typeSauce">
+                                        <label class="form-check-label">
+                                            Maionese
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" value="mustard"
+                                            v-model="typeSauce">
+                                        <label class="form-check-label">
+                                            Mostarda
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- TIPO HAMBÚRGUER -->
+                    <div class="row mt-2">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    TIPO HAMBÚRGUER
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" value="bovine"
+                                            v-model="typeHamburger">
+                                        <label class="form-check-label">
+                                            Bovino
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" value="chicken"
+                                            v-model="typeHamburger">
+                                        <label class="form-check-label">
+                                            Frango
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" value="soy"
+                                            v-model="typeHamburger">
+                                        <label class="form-check-label">
+                                            Soja
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col d-flex justify-content-end">
+                            <button type="button" class="btn btn-primary" @click="order()">Fazer pedido</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" v-if="stage == 2">
+                    <div class="row mt-2">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    INFORME SEUS DADOS
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label class="form-label">Nome</label>
+                                        <input type="text" class="form-control" v-model="inputName">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Endereço</label>
+                                        <input type="text" class="form-control" v-model="inputAddress">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col d-flex justify-content-between">
+                            <button type="button" class="btn btn-warning" @click="stage -= 1">Voltar para o
+                                lanche</button>
+                            <button type="button" class="btn btn-success" @click="confirmOrder()">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" v-if="stage == 3">
+                    <div class="row mt-2">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    PEDIDO CONFIRMADO
+                                </div>
+                                <div class="card-body">
+                                    <p>Aguarde enquanto seu pedido está sendo preparado/processado...</p>
+                                    <p>Chamaremos você em breve &#128521;</p>
+                                    <p>Você será encaminhado para a tela de novo pedido em <b>{{ countdown }}
+                                            segundos</b>. Ou
+                                        escolha uma opção abaixo</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col d-flex justify-content-between">
+                            <button type="button" class="btn btn-primary" @click="stage = 1">Repetir pedido</button>
+                            <button type="button" class="btn btn-success" @click="newOrder()">Novo pedido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    stage: 1,
+                    typeBread: '',
+                    typeSalad: [],
+                    typeSauce: [],
+                    typeHamburger: '',
+                    inputName: '',
+                    inputAddress: '',
+                    countdown: 10,
+                    countdownTimer: null,
+                    alertMessage: '',
+                    typeAlert: '',
+                    showAlert: false
+                }
+            },
+            mounted() { },
+            methods: {
+                order() {
+                    if (this.typeBread && this.typeHamburger) {
+                        this.stage = 2
+                    } else {
+                        this.alertMessage = 'Você precisa adicionar no minímo pão e hambúrguer!'
+                        this.typeAlert = 'alert-danger'
+                        this.showAlert = true
+                    }
+                },
+                confirmOrder() {
+                    if (this.inputName && this.inputAddress) {
+                        this.alertMessage = 'Pedido confirmado com sucesso!'
+                        this.typeAlert = 'alert-success'
+                        this.showAlert = true
+                        this.stage = 3
+
+                        this.countdownTimer = setTimeout(() => this.newOrder(), 10000)
+
+                        this.startCountdown();
+                    } else {
+                        this.alertMessage = 'Você precisa informar o seu nome e endereço'
+                        this.typeAlert = 'alert-danger'
+                        this.showAlert = true
+                    }
+                },
+                newOrder() {
+                    this.typeBread = ''
+                    this.typeSalad = []
+                    this.typeSauce = []
+                    this.typeHamburger = ''
+                    this.stage = 1
+                    this.inputName = ''
+                    this.inputAddress = ''
+                    this.showAlert = false
+                },
+                startCountdown() {
+                    this.countdown = 10;
+                    const interval = setInterval(() => {
+                        this.countdown--;
+                        if (this.countdown <= 0) {
+                            clearInterval(interval);
+                        }
+                    }, 1000);
+                },
+            },
+            computed: {
+                bread() {
+                    switch (this.typeBread) {
+                        case 'sesame':
+                            return ['imagens/pao_gergelim_superior.png', 'imagens/pao_gergelim_inferior.png']
+                        case 'Australian':
+                            return ['imagens/pao_australiano_superior.png', 'imagens/pao_australiano_inferior.png']
+                        default:
+                            return ['imagens/padrao/pao_superior.png', 'imagens/padrao/pao_inferior.png']
+                    }
+                },
+                salad() {
+                    const salads = [];
+                    salads.push(this.typeSalad.includes('lettuce') ? 'imagens/alface.png' : 'imagens/padrao/alface.png');
+                    return salads;
+                },
+                sauce() {
+                    const sauces = [];
+
+                    // Adicionando imagens dos molhos ou imagens padrão com base na seleção
+                    sauces.push(this.typeSauce.includes('ketchup') ? 'imagens/ketchup.png' : 'imagens/padrao/molho.png');
+                    sauces.push(this.typeSauce.includes('mayonnaise') ? 'imagens/maionese.png' : 'imagens/padrao/molho.png');
+                    sauces.push(this.typeSauce.includes('mustard') ? 'imagens/mostarda.png' : 'imagens/padrao/molho.png');
+
+                    return sauces;
+                },
+                hamburger() {
+                    switch (this.typeHamburger) {
+                        case 'bovine':
+                            return ['imagens/bovino.png']
+                        case 'chicken':
+                            return ['imagens/frango.png']
+                        case 'soy':
+                            return ['imagens/soja.png']
+                        default:
+                            return ['imagens/padrao/hamburguer.png']
+                    }
+                }
+            },
+            watch: {
+                stage(newValue) {
+                    if (newValue === 1) {
+                        clearTimeout(this.countdownTimer)
+                        this.countdown = 0
+                        this.showAlert = false
+                    }
+                }
+            }
+        });
+        app.mount('#app');
+    </script>
+</body>
+
+</html>
