@@ -1,0 +1,212 @@
+/* FADE */
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-active {
+    transition: opacity 1s;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+    opacity: 1;
+}
+
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+/* SLIDE */
+.slide-enter-from {
+    opacity: 0;
+    transform: translateX(-150px);
+}
+
+.slide-enter-active,
+.slide-leave-active {
+    transition: 1s;
+    opacity: 1s;
+}
+
+.slide-enter-to,
+.slide-leave-from {
+    opacity: 1;
+    transform: translateX(0px);
+}
+
+.slide-leave-to {
+    opacity: 0;
+    transform: translateX(150px);
+}
+
+/* ZOOM */
+.zoom-enter-from,
+.zoom-leave-to {
+    transform: scale(0);
+}
+
+.zoom-enter-active,
+.zoom-leave-active {
+    transition: transform 1s;
+}
+
+.zoom-enter-to,
+.zoom-leave-from {
+    transform: scale(1);
+}
+
+/* FLIP */
+
+.flip-enter-active {
+    animation: flipCustom 2s;
+}
+
+.flip-leave-active {
+    animation: flipCustom 2s reverse;
+}
+
+@keyframes flip {
+    from {
+        transform: rotateY(-90deg);
+    }
+
+    to {
+        transform: rotateY(0deg);
+    }
+}
+
+@keyframes flipCustom {
+    0% {
+        transform: rotateY(-90deg);
+    }
+
+    25% {
+        transform: rotateY(0deg);
+    }
+
+    50% {
+        transform: rotateY(90deg);
+    }
+
+    75% {
+        transform: rotateY(180deg);
+    }
+
+    100% {
+        transform: rotateY(270deg);
+    }
+}
+
+/* TRANSITION E ANIMATION */
+/* JUMP */
+.jump-enter-from,
+.jump-leave-to {
+    opacity: 0;
+}
+
+.jump-enter-active {
+    animation: jump 2s;
+    transition: 1.5s;
+}
+
+.jump-enter-to,
+.jump-leave-from {
+    opacity: 1;
+}
+
+.jump-leave-active {
+    animation: jump 1s;
+    transition: opacity 0.5s;
+}
+
+@keyframes jump {
+    0% {
+        transform: scale(1, 1) translateY(0);
+    }
+
+    10% {
+        transform: scale(1.1, .9) translateY(0);
+    }
+
+    30% {
+        transform: scale(.9, 1.1) translateY(-30px);
+    }
+
+    50% {
+        transform: scale(1.05, .95) translateY(0);
+    }
+
+    57% {
+        transform: scale(1, 1) translateY(-8px);
+    }
+
+    64% {
+        transform: scale(1, 1) translateY(0);
+    }
+
+    100% {
+        transform: scale(1, 1) translateY(0);
+    }
+}
+
+/* SLIDE DE CIMA PARA BAIXO COM NOMES DE CLASSES CUSTOMIZADAS */
+.entrada-estado-inicial {
+    opacity: 0;
+    transform: translateY(-150px);
+}
+
+.entrada-estado-final,
+.saida-estado-inicial {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.transicao {
+    transition: all 2s;
+}
+
+.saida-estado-final {
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+/* transition-group lista que terá um efeito de slide */
+.list-enter-from {
+    opacity: 0;
+    transform: translateX(-150px)
+}
+
+.list-enter-active {
+    transition: all 1s;
+}
+
+.list-enter-to {
+    opacity: 1;
+    transform: translateX(0px)
+}
+
+.list-leave-from {
+    opacity: 1;
+    transform: translateX(0px)
+}
+
+.list-leave-active {
+    transition: all 1s;
+    position: absolute;
+}
+
+.list-leave-to {
+    opacity: 0;
+    transform: translateX(150px)
+}
+
+.list-move {
+    transition: all 1s;
+}
+
+/* ORDENAÇÃO */
+
+.sorting-move {
+    transition: all 1s;
+}
